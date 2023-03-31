@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "go",
+  "description": "Shortlink Manager",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "img/go-logo.png"
+  },
+  "permissions": [
+    "storage"
+  ]
+}
