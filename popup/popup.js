@@ -107,15 +107,15 @@ const mappingFormatCorrect = mapping => {
 // DOM element creation
 const createMappingItem = ({short, long, id}) => {
   const shortInput = createInput(
-      `${InputType.SHORT}-${id}-input`,
-      'text',
+      id,
+      InputType.SHORT,
       short,
       'go/gh',
       inputChanged
   );
   const longInput = createInput(
-      `${InputType.LONG}-${id}-input`,
-      'text',
+      id,
+      InputType.LONG,
       long,
       'https://github.com',
       inputChanged
@@ -130,10 +130,14 @@ const createMappingItem = ({short, long, id}) => {
 
 const createInput = (id, type, value, placeholder, inputEventListener) => {
   const i = document.createElement('input');
-  i.setAttribute('id', id);
+  i.setAttribute('id', `${InputType.SHORT}-${id}-input`);
   i.setAttribute('type', 'text');
   i.setAttribute('value', value);
-  i.setAttribute('placeholder', placeholder);
+  i.setAttribute('placeholder', placeholder);``
   i.addEventListener('input', inputEventListener);
-  return i;
+
+  const flexWrapper = document.createElement('div');
+  flexWrapper.setAttribute('class', `${type}-input-wrapper`)
+  flexWrapper.append(i)
+  return flexWrapper;
 };
