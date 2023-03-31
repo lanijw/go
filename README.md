@@ -18,8 +18,9 @@ This is a conceptual description of how the extension popup works. State is a sy
 onStart:
   get state,
   maybe write init state
+  create input fields
   
-onInput:
+onInputChange:
   get state
   update state with new input value
   if no empty mapping left:
@@ -32,4 +33,24 @@ onStateChange:
   get current inputs
   maybe remove inputs with no matching mapping object
   maybe add new empty input
+```
+
+Mapping datastructure example
+
+```json
+{
+  "map": [
+    {
+      "short": "go/gh",
+      "long": "https://github.com",
+      "id": 1
+    },
+    {
+      "short": "",
+      "long": "",
+      "id": 2
+    }
+  ],
+  "nextId": 3
+}
 ```
