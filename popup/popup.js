@@ -1,14 +1,9 @@
+import {InputType, mapKey, storageKey} from '../util/util.js';
+
 const state = chrome.storage.sync;
 
-const storageKey = 'shortLinkMapping';
-const mapKey = 'map';
 const nextIdKey = 'nextId';
 const mappingsContainer = document.getElementById('mappings-container');
-
-const InputType = {
-  SHORT: 'short',
-  LONG: 'long'
-};
 
 // on start
 (() => {
@@ -133,11 +128,11 @@ const createInput = (id, type, value, placeholder, inputEventListener) => {
   i.setAttribute('id', `${type}-${id}-input`);
   i.setAttribute('type', 'text');
   i.setAttribute('value', value);
-  i.setAttribute('placeholder', placeholder);``
+  i.setAttribute('placeholder', placeholder);
   i.addEventListener('input', inputEventListener);
 
   const flexWrapper = document.createElement('div');
-  flexWrapper.setAttribute('class', `${type}-input-wrapper`)
-  flexWrapper.append(i)
+  flexWrapper.setAttribute('class', `${type}-input-wrapper`);
+  flexWrapper.append(i);
   return flexWrapper;
 };

@@ -7,6 +7,9 @@
     "default_popup": "popup/popup.html",
     "default_icon": "img/go-logo.png"
   },
+  "chrome_url_overrides": {
+    "newtab": "newtab/newtab.html"
+  },
   "permissions": [
     "storage"
   ]
