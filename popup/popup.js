@@ -130,7 +130,7 @@ const createMappingItem = ({short, long, id}) => {
 
 const createInput = (id, type, value, placeholder, inputEventListener) => {
   const i = document.createElement('input');
-  i.setAttribute('id', `${InputType.SHORT}-${id}-input`);
+  i.setAttribute('id', `${type}-${id}-input`);
   i.setAttribute('type', 'text');
   i.setAttribute('value', value);
   i.setAttribute('placeholder', placeholder);``
