@@ -21,13 +21,6 @@ main {
     font: 5rem "Euclid", sans-serif;
 }
 
-label {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-size: 1rem;
-}
-
 input[type=text] {
     height: 40px;
     width: 400px;
