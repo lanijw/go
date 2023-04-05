@@ -1,0 +1,59 @@
+
+:root {
+    --bg: #fdf8f6;
+    --accent: #fb5607;
+    --box-shadow-top: #d7d3d1;
+}
+
+body {
+    background-color: #fdf8f6;
+}
+
+main {
+    margin-top: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+    font: 5rem "Euclid", sans-serif;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1rem;
+}
+
+input[type=text] {
+    height: 40px;
+    width: 400px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 30px;
+
+    border: 1px solid var(--accent);
+    outline: none;
+
+    --shadow-length: 5px;
+    box-shadow: var(--shadow-length) var(--shadow-length) calc(2 * var(--shadow-length)) var(--box-shadow-top),
+    calc(0px - var(--shadow-length)) calc(0px - var(--shadow-length)) calc(2 * var(--shadow-length)) #ffffff;
+
+    transition: box-shadow 200ms;
+}
+
+input[type=text]:focus {
+    border: 1px solid var(--accent);
+    outline: none;
+
+    --shadow-length: 10px;
+    box-shadow: var(--shadow-length) var(--shadow-length) calc(2 * var(--shadow-length)) var(--box-shadow-top),
+    calc(0px - var(--shadow-length)) calc(0px - var(--shadow-length)) calc(2 * var(--shadow-length)) #ffffff;
+}
+
+input[type=text]::placeholder {
+    font-size: 1rem;
+}
