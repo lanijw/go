@@ -1,8 +1,62 @@
+:root {
+    --bg: #fdf8f6;
+    --box-shadow-top: #d7d3d1;
+    --short-shadow-length: 3px;
+    --long-shadow-length: calc(2 * var(--short-shadow-length));
+    --input-margin: 10px;
+}
+
 body {
-    font-family: Roboto, Arial, Helvetica, sans-serif;
-    width: auto;
+    width: 500px;
+    background-color: var(--bg);
+}
+
+.page-title {
+    font: 3rem "Euclid", sans-serif;
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+#mappings-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--input-margin);
 }
 
 .map-item-wrapper {
     display: flex;
+    gap: var(--input-margin);
+}
+.short-input-wrapper {
+    flex: 1 1 min-content;
+}
+.long-input-wrapper {
+    flex: 3 3 max-content;
+}
+
+input[type=text] {
+    box-sizing: border-box;
+    height: 30px;
+    min-width: 100px;
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+
+    border: none;
+    outline: none;
+
+    --shadow-length: var(--short-shadow-length);
+    box-shadow: var(--shadow-length) var(--shadow-length) calc(2 * var(--shadow-length)) var(--box-shadow-top),
+    calc(0px - var(--shadow-length)) calc(0px - var(--shadow-length)) calc(2 * var(--shadow-length)) #ffffff;
+
+    transition: box-shadow 200ms;
+}
+
+input[type=text]:focus {
+    border: none;
+    outline: none;
+
+    --shadow-length: var(--long-shadow-length);
+    box-shadow: var(--shadow-length) var(--shadow-length) calc(2 * var(--shadow-length)) var(--box-shadow-top),
+    calc(0px - var(--shadow-length)) calc(0px - var(--shadow-length)) calc(2 * var(--shadow-length)) #ffffff;
 }

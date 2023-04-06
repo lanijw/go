@@ -129,6 +129,7 @@ const createInput = (id, type, value, placeholder, inputEventListener) => {
   i.setAttribute('type', 'text');
   i.setAttribute('value', value);
   i.setAttribute('placeholder', placeholder);
+  i.setAttribute('data-form-type', 'other'); // disables dashlane
   i.addEventListener('input', inputEventListener);
 
   const flexWrapper = document.createElement('div');
