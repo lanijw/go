@@ -1,0 +1,36 @@
+:root {
+    --bg: #fdf8f6;
+    --accent: #fb5607;
+    --box-shadow-top: #d7d3d1;
+    --short-shadow-length: 3px;
+    --long-shadow-length: calc(2 * var(--short-shadow-length));
+    --input-margin: 10px;
+}
+
+body {
+    background-color: var(--bg);
+}
+
+.page-title {
+    font-family: "Euclid", sans-serif;
+}
+
+input[type=text] {
+    border: none;
+    outline: none;
+
+    --shadow-length: var(--short-shadow-length);
+    box-shadow: var(--shadow-length) var(--shadow-length) calc(2 * var(--shadow-length)) var(--box-shadow-top),
+    calc(0px - var(--shadow-length)) calc(0px - var(--shadow-length)) calc(2 * var(--shadow-length)) #ffffff;
+
+    transition: box-shadow 200ms;
+}
+
+input[type=text]:focus {
+    border: none;
+    outline: none;
+
+    --shadow-length: var(--long-shadow-length);
+    box-shadow: var(--shadow-length) var(--shadow-length) calc(2 * var(--shadow-length)) var(--box-shadow-top),
+    calc(0px - var(--shadow-length)) calc(0px - var(--shadow-length)) calc(2 * var(--shadow-length)) #ffffff;
+}

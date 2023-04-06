@@ -1,15 +1,5 @@
-:root {
-    --bg: #fdf8f6;
-    --accent: #fb5607;
-    --box-shadow-top: #d7d3d1;
-    --short-shadow-length: 3px;
-    --long-shadow-length: calc(2 * var(--short-shadow-length));
-    --input-margin: 10px;
-}
-
 body {
     width: 500px;
-    background-color: var(--bg);
 }
 
 body::-webkit-scrollbar-track {
@@ -29,7 +19,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .page-title {
-    font: 3rem "Euclid", sans-serif;
+    font-size: 3rem;
     margin-top: 0;
     margin-bottom: 16px;
 }
@@ -58,22 +48,4 @@ input[type=text] {
     width: 100%;
     border-radius: 5px;
     padding: 10px;
-
-    border: none;
-    outline: none;
-
-    --shadow-length: var(--short-shadow-length);
-    box-shadow: var(--shadow-length) var(--shadow-length) calc(2 * var(--shadow-length)) var(--box-shadow-top),
-    calc(0px - var(--shadow-length)) calc(0px - var(--shadow-length)) calc(2 * var(--shadow-length)) #ffffff;
-
-    transition: box-shadow 200ms;
-}
-
-input[type=text]:focus {
-    border: none;
-    outline: none;
-
-    --shadow-length: var(--long-shadow-length);
-    box-shadow: var(--shadow-length) var(--shadow-length) calc(2 * var(--shadow-length)) var(--box-shadow-top),
-    calc(0px - var(--shadow-length)) calc(0px - var(--shadow-length)) calc(2 * var(--shadow-length)) #ffffff;
 }
