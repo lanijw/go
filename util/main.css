@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Euclid";
+    src: url("Euclid Circular A Bold.ttf");
+}
+
 :root {
     --bg: #fdf8f6;
     --accent: #fb5607;
