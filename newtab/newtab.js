@@ -21,6 +21,11 @@ document.getElementById('shorthand-input').onkeydown = async e => {
   }
 };
 
+Array.from(document.getElementsByClassName('umlaut__button'))
+    .forEach(b => b.addEventListener('click', e =>
+        navigator.clipboard.writeText(e.currentTarget.innerText)
+    ));
+
 const setErrorText = (text) => {
   errorMsgContainer.innerText = text;
 };

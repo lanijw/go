@@ -10,6 +10,8 @@
     --short-shadow-length: 3px;
     --long-shadow-length: calc(2 * var(--short-shadow-length));
     --input-margin: 10px;
+
+    --newtab__margin: 20vh;
 }
 
 .body {
@@ -28,7 +30,7 @@
 
 .body::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color: var(--accent);
 }
 
@@ -44,9 +46,10 @@
     font-size: 3rem;
 }
 
-.input {
+.input, .button {
     border: none;
     outline: none;
+    background-color: var(--bg);
 
     --shadow-length: var(--short-shadow-length);
     box-shadow: var(--shadow-length) var(--shadow-length) calc(2 * var(--shadow-length)) var(--box-shadow-top),
@@ -55,13 +58,21 @@
     transition: box-shadow 200ms;
 }
 
-.input:focus {
-    border: none;
-    outline: none;
+.button {
+    cursor: pointer;
+    border-radius: 100%;
+}
 
+.input:focus, .button:hover {
     --shadow-length: var(--long-shadow-length);
     box-shadow: var(--shadow-length) var(--shadow-length) calc(2 * var(--shadow-length)) var(--box-shadow-top),
     calc(0px - var(--shadow-length)) calc(0px - var(--shadow-length)) calc(2 * var(--shadow-length)) #ffffff;
+}
+
+.button:active {
+    --shadow-length: var(--short-shadow-length);
+    box-shadow: inset var(--shadow-length) var(--shadow-length) calc(2 * var(--shadow-length)) var(--box-shadow-top),
+    inset calc(0px - var(--shadow-length)) calc(0px - var(--shadow-length)) calc(2 * var(--shadow-length)) #ffffff;
 }
 
 .input--text-center {
@@ -91,10 +102,33 @@
     font-size: 1.5rem;
 }
 
+.card {
+    padding: 16px;
+    width: 100%;
+    height: min-content;
+    border-radius: 5px;
+
+    --shadow-length: var(--short-shadow-length);
+    box-shadow: var(--shadow-length) var(--shadow-length) calc(2 * var(--shadow-length)) var(--box-shadow-top),
+    calc(0px - var(--shadow-length)) calc(0px - var(--shadow-length)) calc(2 * var(--shadow-length)) #ffffff;
+}
+
+.card__title {
+    font-family: "Euclid", sans-serif;
+    font-size: 1.7rem;
+}
+
+.card__text {
+    font-size: 1.1rem;
+}
+
 .margin-top-none {
     margin-top: 0;
 }
 
+.margin-small {
+    margin: 8px;
+}
 
 
 /* POPUP specific */
@@ -123,13 +157,36 @@
 }
 
 
-
 /* NEWTAB specific */
 
 .newtab__main {
-    margin-top: 20vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-bottom: var(--newtab__margin);
+
+    height: calc(100vh - var(--newtab__margin));
+}
+
+.newtab__util {
+    margin: 30vh 10vh 0 10vh;
+    height: 90vh;
+
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.umlaut__button {
+    --dim: 32px;
+    width: var(--dim);
+    height: var(--dim);
+    font-size: 1.5rem;
+}
+
+.umlaut__button-wrapper {
+    display: flex;
+    justify-content: space-around;
+    gap: 8px;
 }
