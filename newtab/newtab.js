@@ -13,7 +13,7 @@ document.getElementById('shorthand-input').onkeydown = async e => {
       const redirectUrl = matchingMapping[InputType.LONG] +
           shorthand.slice(matchingMapping[InputType.SHORT].length);
       chrome.tabs.update({
-        url: redirectUrl.endsWith('/') ? redirectUrl : redirectUrl + '/'
+        url: redirectUrl
       });
     } else {
       setErrorText(`The shorthand "${shorthand}" doesn't match a value or the matching value is an empty string.`);
