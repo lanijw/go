@@ -80,7 +80,7 @@ chrome.storage.onChanged.addListener(stateChanged);
 // --- UTIL ---
 const shortAndLongSafelyEmpty = m => m?.short === '' && m?.long === '';
 
-// start util
+// startup util
 const emptyMappingFactory = id => ({short: '', long: '', id});
 const initState = {
   map: [emptyMappingFactory(1)],
@@ -118,7 +118,7 @@ const createMappingItem = ({short, long, id}) => {
 
   const wrapper = document.createElement('div');
   wrapper.setAttribute('id', `map-item-${id}`);
-  wrapper.setAttribute('class', 'map-item-wrapper');
+  wrapper.setAttribute('class', 'mapping__item');
   wrapper.append(shortInput, longInput);
   return wrapper;
 };
@@ -126,6 +126,7 @@ const createMappingItem = ({short, long, id}) => {
 const createInput = (id, type, value, placeholder, inputEventListener) => {
   const i = document.createElement('input');
   i.setAttribute('id', `${type}-${id}-input`);
+  i.setAttribute('class', `input input--size-xsmall`);
   i.setAttribute('type', 'text');
   i.setAttribute('value', value);
   i.setAttribute('placeholder', placeholder);
@@ -133,7 +134,7 @@ const createInput = (id, type, value, placeholder, inputEventListener) => {
   i.addEventListener('input', inputEventListener);
 
   const flexWrapper = document.createElement('div');
-  flexWrapper.setAttribute('class', `${type}-input-wrapper`);
+  flexWrapper.setAttribute('class', `mapping__input-wrapper--length-${type}`);
   flexWrapper.append(i);
   return flexWrapper;
 };
