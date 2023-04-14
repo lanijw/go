@@ -4,6 +4,14 @@ This is a simple extension that lets you add a mapping from short links to norma
 
 f.e. `go/gl/mr/` could map to `https://gitlab.com/gitlab-org/gitlab/-/merge_requests/`. By entering `go/gl/mr/116433` the user gets taken to `https://gitlab.com/gitlab-org/gitlab/-/merge_requests/116433` instead.
 
+## Installation
+
+Because I'm too stingy to spend 5 bucks on registering as a Developer on the Chrome Webstore you will have to load this extension unpacked, but don't worry it's very easy.
+
+1. Clone this repository wherever you'd like.
+2. Follow the instructions on [Chrome Developers](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked) to install (load) the extension.
+3. That's it. You've already completed the process. Wasn't that easy?
+
 ## User Manual
 
 Enter the short text in the left input and the long URL in the right input. A new empty mapping is added when any of the two fields in the empty mapping have text in them. A mapping without any text is automatically removed.
