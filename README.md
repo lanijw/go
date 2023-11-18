@@ -6,17 +6,13 @@ f.e. `go/gl/mr/` could map to `https://gitlab.com/gitlab-org/gitlab/-/merge_requ
 
 ## Installation
 
-Because I'm too stingy to spend 5 bucks on registering as a Developer on the Chrome Webstore you will have to load this extension unpacked, but don't worry it's very easy.
-
-1. Clone this repository wherever you'd like.
-2. Follow the instructions on [Chrome Developers](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked) to install (load) the extension.
-3. That's it. You've already completed the process. Wasn't that easy?
+Install it from the [Chrome Web Store](https://chromewebstore.google.com/detail/go/mahkmjlcgkcpkdoonpgjgbbocgegfjhn).
 
 ## User Manual
 
-Enter the short text in the left input and the long URL in the right input. A new empty mapping is added when any of the two fields in the empty mapping have text in them. A mapping without any text is automatically removed.
+To add a new mapping, click the extension icon. It's recommended to pin the extension. Enter the short text in the left field and the long URL in the right field. Empty fields are added automatically when necessary. A set of fields is removed when both fields are empty. Changes are saved automatically.
 
-Changes are saved to chrome's synchronised storage on every key press.
+To use the configured mappings, place your cursor in the address bar, type 'go', press Tab and start typing. Matching results are suggested automatically.
 
 ## Basic Internal Workflow
 
