@@ -7,10 +7,9 @@ chrome.omnibox.onInputChanged.addListener((text, suggest) => {
   state.get([storageKey]).then(result => {
     const mapping = result[storageKey][mapKey];
     if (mappingFormatCorrect(result[storageKey])) {
-      const urls = getMatchingSuggestions(text, mapping);
-      const [firstUrl] = urls;
+      const [firstUrl, ...otherUrls] = getMatchingSuggestions(text, mapping);
       chrome.omnibox.setDefaultSuggestion({description: firstUrl.description});
-      suggest(urls);
+      suggest(otherUrls);
     } else {
       chrome.omnibox.setDefaultSuggestion(outdatedLinkSuggestion);
     }
@@ -53,8 +52,8 @@ const matchToSuggestion = (text, short, long) => {
     const desc = `<match>${text}</match>${short.slice(text.length)} <dim>${connectionText}</dim> <url>${long}</url>`;
     return createSuggestion(short, desc);
   } else {
-    const desc = `<match>${text}</match> <dim>${connectionText}</dim> <url>${long}</url><match>${text.slice(short.length)}</match>`;
-    return createSuggestion(text, desc);
+    const desc = `<match>${short}</match>${text.slice(short.length)} <dim>${connectionText}</dim> <url>${long}</url>${text.slice(short.length)}`;
+    return createSuggestion(short, desc);
   }
 };
 
@@ -63,8 +62,18 @@ const getMatchingSuggestions = (text, mapping) => {
                                                      || text.startsWith(short)
                                                      && '' !== short
                                                      && '' !== text;
-  return mapping.filter(({short}) => beginningsOverlapNonEmpty(short, text))
+  const res = mapping.filter(({short}) => beginningsOverlapNonEmpty(short, text))
+                .sort(({short: shortA}, {short: shortB}) => {
+                  // Swap if first element is longer and first element is substring of text.
+                  // This means that if two possible matches start the same and one option is a
+                  // substring of text and text is a substring of the other, the first item will
+                  // take precedence. Once both options are substrings of text, the option that is
+                  // longer takes precedence.
+                  return shortA.length > shortB.length && text.length > shortA.length ? -1 : 0;
+                })
                 .map(({short, long}) => matchToSuggestion(text, short, long));
+  console.log(res);
+  return res;
 };
 
 
