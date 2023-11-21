@@ -7,9 +7,14 @@ chrome.omnibox.onInputChanged.addListener((text, suggest) => {
   state.get([storageKey]).then(result => {
     const mapping = result[storageKey][mapKey];
     if (mappingFormatCorrect(result[storageKey])) {
-      const [firstUrl, ...otherUrls] = getMatchingSuggestions(text, mapping);
-      chrome.omnibox.setDefaultSuggestion({description: firstUrl.description});
-      suggest(otherUrls);
+      const [firstSuggestion, ...otherSuggestions] = getMatchingSuggestions(text, mapping);
+      console.log(firstSuggestion, otherSuggestions);
+      if (firstSuggestion) {
+        chrome.omnibox.setDefaultSuggestion({description: firstSuggestion.description});
+      }
+      if (otherSuggestions.length !== 0) {
+        suggest(otherSuggestions);
+      }
     } else {
       chrome.omnibox.setDefaultSuggestion(outdatedLinkSuggestion);
     }
@@ -20,16 +25,17 @@ chrome.omnibox.onInputEntered.addListener((text, disposition) => {
   state.get([storageKey]).then(result => {
     const mapping = result[storageKey][mapKey];
     if (mappingFormatCorrect(result[storageKey])) {
-      const [firstUrl] = getMatchingSuggestions(text, mapping);
+      const [firstUrl] = getMatchingUrls(text, mapping);
+      if (!firstUrl) return;
       switch (disposition) {
         case 'currentTab':
-          chrome.tabs.update({url: firstUrl.description});
+          chrome.tabs.update({url: firstUrl});
           break;
         case 'newForegroundTab':
-          chrome.tabs.create({url: firstUrl.description});
+          chrome.tabs.create({url: firstUrl});
           break;
         case 'newBackgroundTab':
-          chrome.tabs.create({url: firstUrl.description, active: false});
+          chrome.tabs.create({url: firstUrl, active: false});
           break;
         default:
           // All cases exhausted.
@@ -57,12 +63,20 @@ const matchToSuggestion = (text, short, long) => {
   }
 };
 
+const getMatchingUrls = (text, mapping) => {
+  return getMatching(text, mapping).map(({short, long}) => long + text.slice(short.length));
+}
+
 const getMatchingSuggestions = (text, mapping) => {
+  return getMatching(text, mapping).map(({short, long}) => matchToSuggestion(text, short, long));
+};
+
+const getMatching = (text, mapping) => {
+  if (text === "") return [];
   const beginningsOverlapNonEmpty = (short, text) => short.startsWith(text)
                                                      || text.startsWith(short)
-                                                     && '' !== short
-                                                     && '' !== text;
-  const res = mapping.filter(({short}) => beginningsOverlapNonEmpty(short, text))
+                                                     && '' !== short;
+  return mapping.filter(({short}) => beginningsOverlapNonEmpty(short, text))
                 .sort(({short: shortA}, {short: shortB}) => {
                   // Swap if first element is longer and first element is substring of text.
                   // This means that if two possible matches start the same and one option is a
@@ -70,11 +84,8 @@ const getMatchingSuggestions = (text, mapping) => {
                   // take precedence. Once both options are substrings of text, the option that is
                   // longer takes precedence.
                   return shortA.length > shortB.length && text.length > shortA.length ? -1 : 0;
-                })
-                .map(({short, long}) => matchToSuggestion(text, short, long));
-  console.log(res);
-  return res;
-};
+                });
+}
 
 
 // --- foreign util ---
