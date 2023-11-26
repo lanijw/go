@@ -8,7 +8,6 @@ chrome.omnibox.onInputChanged.addListener((text, suggest) => {
     const mapping = result[storageKey][mapKey];
     if (mappingFormatCorrect(result[storageKey])) {
       const [firstSuggestion, ...otherSuggestions] = getMatchingSuggestions(text, mapping);
-      console.log(firstSuggestion, otherSuggestions);
       if (firstSuggestion) {
         chrome.omnibox.setDefaultSuggestion({description: firstSuggestion.description});
       }
@@ -65,7 +64,7 @@ const matchToSuggestion = (text, short, long) => {
 
 const getMatchingUrls = (text, mapping) => {
   return getMatching(text, mapping).map(({short, long}) => long + text.slice(short.length));
-}
+};
 
 const getMatchingSuggestions = (text, mapping) => {
   return getMatching(text, mapping).map(({short, long}) => matchToSuggestion(text, short, long));
@@ -73,19 +72,26 @@ const getMatchingSuggestions = (text, mapping) => {
 
 const getMatching = (text, mapping) => {
   if (text === "") return [];
-  const beginningsOverlapNonEmpty = (short, text) => short.startsWith(text)
-                                                     || text.startsWith(short)
+  const beginningsOverlapNonEmpty = (short, text) => (short.startsWith(text)
+                                                      || text.startsWith(short))
                                                      && '' !== short;
   return mapping.filter(({short}) => beginningsOverlapNonEmpty(short, text))
                 .sort(({short: shortA}, {short: shortB}) => {
-                  // Swap if first element is longer and first element is substring of text.
-                  // This means that if two possible matches start the same and one option is a
-                  // substring of text and text is a substring of the other, the first item will
-                  // take precedence. Once both options are substrings of text, the option that is
-                  // longer takes precedence.
-                  return shortA.length > shortB.length && text.length > shortA.length ? -1 : 0;
+                  // Swap if percentile overlap of first element is greater than percentile overlap
+                  // of second element.
+                  const aOverlap = calcOverlap(text, shortA);
+                  const bOverlap = calcOverlap(text, shortB);
+                  return bOverlap - aOverlap;
                 });
-}
+};
+
+const calcOverlap = (a, b) => {
+  if (a.length > b.length) {
+    return b.length / a.length;
+  } else {
+    return a.length / b.length;
+  }
+};
 
 
 // --- foreign util ---
