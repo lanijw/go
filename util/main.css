@@ -65,7 +65,7 @@
     transition: box-shadow 200ms;
 }
 
-.input:focus, .button:hover {
+.input:focus {
     --shadow-length: var(--long-shadow-length);
     box-shadow: var(--shadow-length)
                 var(--shadow-length)
@@ -117,7 +117,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--input-margin);
-    margin-top: 1.5rem;
+    margin-top: .5rem;
 }
 
 .mapping__item {
@@ -131,4 +131,33 @@
 
 .mapping__input-wrapper--length-long {
     flex: 3 3 max-content;
+}
+
+.header {
+    display: flex;
+    gap: 1rem;
+}
+
+.header-left {
+    flex: 1;
+}
+
+.header-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.icon-button:hover {
+    cursor: pointer;
+}
+
+.icon-button > img {
+    width: 2rem;
+    height: 2rem;
 }

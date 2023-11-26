@@ -13,13 +13,15 @@
         <p>Define short links that redirect to a long URL, when entering them in the search field.</p>
       </div>
       <div class="header-right">
-        <a class="button" id="export-anchor">Export configuration</a>
-        <label for="import-input">Import configuration</label>
-        <input
-            type="file"
-            accept=".json"
-            id="import-input"
-            class="hidden"/>
+        <a class="icon-button" id="export-anchor" title="Export configuration">
+          <img src="../img/download.svg" alt="download icon">
+        </a>
+        <div>
+          <label class="icon-button" for="import-input" title="Import configuration">
+            <img src="../img/upload.svg" alt="upload icon">
+          </label>
+          <input type="file" accept=".json" id="import-input" class="hidden"/>
+        </div>
       </div>
     </div>
     <div id="mappings-container" class="mapping__container"></div>
