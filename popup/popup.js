@@ -4,6 +4,8 @@ const state = chrome.storage.sync;
 
 const nextIdKey = 'nextId';
 const mappingsContainer = document.getElementById('mappings-container');
+const exportAnchor = document.getElementById('export-anchor');
+const importButton = document.getElementById('import-buttons');
 
 // on start
 (() => {
@@ -60,6 +62,9 @@ const stateChanged = mapping => {
   }
   const validIds = mapping[mapKey].map(m => m.id);
 
+  updateExportFile(reduceForExport(mapping));
+  updateExportFileName();
+
   mappingsContainer.childNodes.forEach(mappingItem => {
     const [_1, _2, idS] = mappingItem.id.split('-');
     const id = Number(idS);
@@ -76,9 +81,46 @@ const stateChanged = mapping => {
 };
 chrome.storage.onChanged.addListener(stateChanged);
 
+const updateExportFile = newValue => {
+  exportAnchor.setAttribute('href',
+                            'data:text/json;charset=utf-8,' +
+                            encodeURIComponent(JSON.stringify(newValue)));
+};
+const updateExportFileName = () => {
+  exportAnchor.setAttribute('download', downloadableFileName('', 'go-userdata', new Date()));
+};
+
 
 // --- UTIL ---
 const shortAndLongSafelyEmpty = m => m?.short === '' && m?.long === '';
+
+// export util
+const downloadableFileName = (lead, sourceProgram, date) => {
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let seconds = date.getSeconds();
+  [year, month, day, hours, minutes, seconds]
+      = [year, month, day, hours, minutes, seconds].map(formatDatePart);
+  const optionalSpacer = lead === '' ? '' : '_';
+  return `${lead}${optionalSpacer}${sourceProgram}_${year}-${month}-${day}_${hours}-${minutes}-${seconds}.json`;
+};
+
+const formatDatePart = num => {
+  const numString = num.toString();
+  return numString.length > 1 ? numString : '0' + numString;
+};
+
+/** Throws out nextId, id of entries and removes empty entries.
+ * @param {map: [{id: number, short: string, long: string}], nextId: number} mapping
+ * @returns {[{short: string, long: string}]}
+ */
+const reduceForExport = mapping => {
+  return mapping[mapKey].map(({short, long}) => ({short, long}))
+                        .filter(({short, long}) => '' !== short && '' !== long);
+};
 
 // startup util
 const emptyMappingFactory = id => ({short: '', long: '', id});
@@ -95,8 +137,8 @@ const mappingFormatCorrect = mapping => {
   const lastMappingEmpty = ms => shortAndLongSafelyEmpty(ms[ms.length - 1]);
   const oneMappingEmpty = ms => ms.filter(shortAndLongSafelyEmpty).length === 1;
   return Array.isArray(mapping[mapKey]) &&
-      oneMappingEmpty(mapping[mapKey]) &&
-      lastMappingEmpty(mapping[mapKey]);
+         oneMappingEmpty(mapping[mapKey]) &&
+         lastMappingEmpty(mapping[mapKey]);
 };
 
 // DOM element creation

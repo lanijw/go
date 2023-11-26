@@ -7,8 +7,16 @@
     <script src="popup.js" type="module" defer></script>
   </head>
   <body class="body popup__body">
-    <h1 class="h1 h1--size-medium margin-top-none">GO/</h1>
-    <p>Define short links that redirect to a long URL, when entering them in the search field.</p>
+    <div class="header">
+      <div class="header-left">
+        <h1 class="h1 h1--size-medium margin-top-none">GO/</h1>
+        <p>Define short links that redirect to a long URL, when entering them in the search field.</p>
+      </div>
+      <div class="header-right">
+        <a class="button" id="export-anchor">Export configuration</a>
+        <button class="button" id="import-button"></button>
+      </div>
+    </div>
     <div id="mappings-container" class="mapping__container"></div>
   </body>
 </html>
