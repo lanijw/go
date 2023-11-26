@@ -14,7 +14,12 @@
       </div>
       <div class="header-right">
         <a class="button" id="export-anchor">Export configuration</a>
-        <button class="button" id="import-button"></button>
+        <label for="import-input">Import configuration</label>
+        <input
+            type="file"
+            accept=".json"
+            id="import-input"
+            class="hidden"/>
       </div>
     </div>
     <div id="mappings-container" class="mapping__container"></div>

@@ -5,7 +5,7 @@ const state = chrome.storage.sync;
 const nextIdKey = 'nextId';
 const mappingsContainer = document.getElementById('mappings-container');
 const exportAnchor = document.getElementById('export-anchor');
-const importButton = document.getElementById('import-buttons');
+const importInput = document.getElementById('import-input');
 
 // on start
 (() => {
@@ -90,6 +90,11 @@ const updateExportFileName = () => {
   exportAnchor.setAttribute('download', downloadableFileName('', 'go-userdata', new Date()));
 };
 
+importInput.addEventListener('change', _ => {
+  const [file] = importInput.files;
+  importFile(file);
+});
+
 
 // --- UTIL ---
 const shortAndLongSafelyEmpty = m => m?.short === '' && m?.long === '';
@@ -120,6 +125,38 @@ const formatDatePart = num => {
 const reduceForExport = mapping => {
   return mapping[mapKey].map(({short, long}) => ({short, long}))
                         .filter(({short, long}) => '' !== short && '' !== long);
+};
+
+// import util
+const importFile = file => {
+  if (!file) {
+    return;
+  }
+
+  let fileContent = '';
+  const reader = new FileReader();
+  reader.addEventListener(
+      'load',
+      () => {
+        fileContent = reader.result;
+        const importedUserData = JSON.parse(fileContent);
+        addNewEntries(importedUserData);
+      },
+      false
+  );
+  reader.readAsText(file);
+};
+
+const addNewEntries = newMappings => {
+  state.get([storageKey]).then(r => {
+    const currentReduced = reduceForExport(r[storageKey]);
+    const newMapping = [...currentReduced, ...newMappings, {short: '', long: ''}].map((element, i) => ({...element, id: i + 1}));
+    const res = {
+      map: newMapping,
+      nextId: newMapping.length + 1
+    };
+    state.set({[storageKey]: res});
+  });
 };
 
 // startup util
