@@ -4,14 +4,19 @@ const mapKey = 'map';
 const state = browser.storage.sync;
 const usageSuggestion = `Input the shorthand for a longer URL and press enter to navigate to the specified address.`;
 
-browser.omnibox.setDefaultSuggestion({description: usageSuggestion});
-
 browser.omnibox.onInputChanged.addListener((text, suggest) => {
   state.get([storageKey]).then(result => {
     const mapping = result[storageKey][mapKey];
     if (mappingFormatCorrect(result[storageKey])) {
-      const suggestions = getMatchingSuggestions(text, mapping);
-      suggest(suggestions);
+      const [firstSuggestion, ...otherSuggestions] = getMatchingSuggestions(text, mapping);
+      if (firstSuggestion) {
+        chrome.omnibox.setDefaultSuggestion({description: firstSuggestion.description});
+      } else {
+        browser.omnibox.setDefaultSuggestion({description: usageSuggestion});
+      }
+      if (otherSuggestions.length !== 0) {
+        suggest(otherSuggestions);
+      }
     } else {
       browser.omnibox.setDefaultSuggestion(outdatedLinkSuggestion);
     }
@@ -50,7 +55,7 @@ const createSuggestion = (content, description) => {
 };
 
 const matchToSuggestion = (text, short, long) => {
-  const connectionText = "will send you to";
+  const connectionText = 'will send you to';
   if (text.length < short.length) {
     const desc = `${text}|${short.slice(text.length)} ${connectionText} ${long}`;
     return createSuggestion(short, desc);
@@ -69,7 +74,7 @@ const getMatchingSuggestions = (text, mapping) => {
 };
 
 const getMatching = (text, mapping) => {
-  if (text === "") return [];
+  if (text === '') return [];
   const beginningsOverlapNonEmpty = (short, text) => (short.startsWith(text)
                                                       || text.startsWith(short))
                                                      && '' !== short;
