@@ -10,6 +10,9 @@
     "default_popup": "popup/popup.html",
     "default_icon": "img/go-logo.png"
   },
+  "options_ui": {
+    "page": "options/options.html"
+  },
   "background": {
     "scripts": ["service-worker.js"],
     "type": "module"

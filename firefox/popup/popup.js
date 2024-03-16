@@ -5,6 +5,7 @@ const state = browser.storage.sync;
 const nextIdKey = 'nextId';
 const mappingsContainer = document.getElementById('mappings-container');
 const exportAnchor = document.getElementById('export-anchor');
+const importButton = document.getElementById('import-button');
 
 // on start
 (() => {
@@ -89,6 +90,9 @@ const updateExportFileName = () => {
   exportAnchor.setAttribute('download', downloadableFileName('', 'go-userdata', new Date()));
 };
 
+// --- import util ---
+
+importButton.addEventListener('click', _ => browser.runtime.openOptionsPage());
 
 // --- UTIL ---
 const shortAndLongSafelyEmpty = m => m?.short === '' && m?.long === '';

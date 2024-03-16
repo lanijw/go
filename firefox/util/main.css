@@ -16,6 +16,7 @@
 
 .body {
     background-color: var(--bg);
+    font-family: sans-serif;
 }
 
 .body::-webkit-scrollbar-track {
@@ -160,4 +161,10 @@
 .icon-button > img {
     width: 2rem;
     height: 2rem;
+}
+
+button.icon-button {
+    border: none;
+    background: none;
+    padding: 0;
 }

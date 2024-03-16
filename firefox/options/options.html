@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>go Import/Export</title>
+    <link rel="stylesheet" href="../util/main.css">
+    <script src="options.js" type="module" defer></script>
+  </head>
+  <body>
+    <label class="icon-button" for="import-input" title="Import configuration">
+      <img src="../img/upload.svg" alt="upload icon">
+    </label>
+    <input type="file" accept=".json" id="import-input" class="hidden"/>
+
+    <p>
+      Due to <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1378527">Firefox bug 1378527</a> it's not possible to use a file upload dialog in the popup window of a Firefox Add-On. As soon as the user interacts with the file upload dialog, the Add-On popup gets closed, disconnecting the listeners on the input field. Once the user selects a file, nothing is notified of that change and the result if a lack of response from the system. As an alternative you can upload your configuration through this options page.
+    </p>
+  </body>
+</html>
