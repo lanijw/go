@@ -110,3 +110,4 @@ const mappingFormatCorrect = mapping => {
 };
 
 const shortAndLongSafelyEmpty = m => m?.short === '' && m?.long === '';
+
