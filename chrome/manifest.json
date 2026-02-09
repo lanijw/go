@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "go",
   "description": "Shortlink Manager",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "omnibox": {
     "keyword": "go"
   },
